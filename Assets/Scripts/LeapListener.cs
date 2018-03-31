@@ -24,6 +24,8 @@ public class LeapListener : MonoBehaviour {
     // other private leap specific variables
     Frame frame;
     List<Hand> hands;
+    Hand rh;
+    Hand lh;
 
 	// Use this for initialization
 	void Start () {
@@ -60,8 +62,17 @@ public class LeapListener : MonoBehaviour {
 
         foreach (Hand h in hands)
         {
-            if (h.IsRight) rInView = true;
-            else if (h.IsLeft) lInView = true;
+            if (h.IsRight)
+            {
+                rInView = true;
+                rh = h;
+            }
+            else if (h.IsLeft)
+            {
+                lInView = true;
+                lh = h;
+            }
+
         }
     }
 
@@ -109,12 +120,29 @@ public class LeapListener : MonoBehaviour {
         }
     }
 
+    /**--------------------------------------------------------------------------------------
+     * Get the vector
+     */
+    public Leap.Vector R_GetPalmPosition()
+    {
+        //Debug.Log(rh.PalmPosition.x);
+        return rh.PalmPosition;
+    }
+
+    public Leap.Vector R_GetPalmVelocity()
+    {
+        Debug.Log(rh.PalmVelocity.x);
+        return rh.PalmVelocity;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     // Advanced Gesture Detection
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    
 
-
+    
+    
 
 
 }

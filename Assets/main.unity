@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7507c131746660740ab9997b3b5118c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationMultiplier: 5
 --- !u!4 &1090117265 stripped
 Transform:
   m_PrefabParentObject: {fileID: 432918, guid: b9c7aaf0d314cb847a3b2a20e893f1b6, type: 2}
@@ -231,6 +232,8 @@ MonoBehaviour:
   lInView: 0
   rNormalDown: 0
   lNormalDown: 0
+  rGrabbing: 0
+  lGrabbing: 0
 --- !u!1 &1228033424
 GameObject:
   m_ObjectHideFlags: 0
