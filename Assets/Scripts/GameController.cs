@@ -6,7 +6,9 @@ public class GameController : MonoBehaviour {
 
     // Variables: specific to testing
     string mainObjectString = "TestCube";
-    public float rotationMultiplier = 5.0f;
+
+    // Multipliers for gestures 
+    public float rotationMultiplier = -0.01f;
 
     // Leap Objects
     LeapListener listener;
