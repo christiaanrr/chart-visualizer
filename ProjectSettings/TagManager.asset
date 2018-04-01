@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - RH_MODEL
-  - LH_MODEL
+  - zoom-zone
+  - head-camera-pos
   - orb
+  - patient
+  - box
   layers:
   - Default
   - TransparentFX
