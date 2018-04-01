@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - RH_MODEL
+  - LH_MODEL
+  - orb
   layers:
   - Default
   - TransparentFX
