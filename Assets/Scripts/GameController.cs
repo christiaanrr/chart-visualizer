@@ -45,12 +45,17 @@ public class GameController : MonoBehaviour {
         {
             mainObject.transform.rotation *=  Quaternion.Euler(0, rotationMultiplier * listener.L_GetPalmVelocity().x, 0);
         }
+        
+
 
 
 
         // ---------------------------------------------------------------------------------------------------------------------
-        // TODO: Summon motion: Object selected
-        // TODO: need to make sure that an object is selected
+        // TODO: Backout
+        if (listener.backoutGestureDetected)
+        {
+            CameraActionBackAway();
+        }
 
 
         
@@ -96,16 +101,14 @@ public class GameController : MonoBehaviour {
             {
                 if (listener.summonGestureDetected)
                 {
-                    selected.transform.position = camera.transform.position + new Vector3(0,0,2.0f);
+                    // CALL CHRISTIAN FUNC
+                    CameraActionComeTo(selected);
                 }
             }
         }
 
+
         
-       
-
-
-
 
     }
 
@@ -115,6 +118,16 @@ public class GameController : MonoBehaviour {
         return new Vector3(lv.x, lv.y, lv.z);
     }
 
-   
+    void CameraActionComeTo(GameObject g)
+    {
+        g.transform.position = camera.transform.position + new Vector3(0, 0, 2.0f);
+    }
+
+    void CameraActionBackAway()
+    {
+        camera.transform.position += new Vector3(0, 0, -10.0f);
+    }
+
+
 
 }

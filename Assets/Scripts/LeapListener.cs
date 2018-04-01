@@ -14,6 +14,8 @@ public class LeapListener : MonoBehaviour {
     public float summonThresh = 0.9f;
     public float summonPalmNormThresh = 0.7f;
     float leapToWorldMultiplier = 0.5f;
+    public float backOutPalmThresh = 0.9f;
+    public float backOutDistanceThresh = 300.0f;
 
     public bool rInView;        // rh in view
     public bool lInView;        // lh in view
@@ -21,14 +23,21 @@ public class LeapListener : MonoBehaviour {
     public bool lSummonReady;      // lh oriented palm down
     public bool rGrabbing;      // rh grabbing gesture
     public bool lGrabbing;      // lh grabbing gesture
+    public bool backOutPositionReady;   // rh sideways palm
 
     // advanced
-    public bool summonGestureDetected;
-    public bool selectionGestureDetected;
+    public bool summonGestureDetected = false;
+    public bool selectionGestureDetected = false;
+    public bool backoutGestureDetected = false;
 
     // buttonbool for one time actions
     bool summoning = false;
     bool selecting = false;
+
+    // gesture related vars
+    Leap.Vector backOutInitPos;
+    float backOutTravelDistance;
+    bool backOutListening = false;
 
     
 
@@ -58,6 +67,9 @@ public class LeapListener : MonoBehaviour {
         CheckGrab(hands);
         ListenForSummon(rh);            // RH summon
         ListenForSelection(rh);         // RH selection
+        ListenForBackOut(rh);           // RH backout
+
+
         // UpdateRingFingerPos(rh);        // Update the ring finger position .... NOT USING
 
         // LeapToWorld(rh.PalmPosition);
@@ -101,6 +113,7 @@ public class LeapListener : MonoBehaviour {
     {
         rSummonReady = false;
         lSummonReady = false;
+        backOutPositionReady = false;
         
 
         foreach (Hand h in hands)
@@ -113,6 +126,18 @@ public class LeapListener : MonoBehaviour {
             else if (h.PalmNormal.y > summonPalmNormThresh && h.IsLeft)
             {
                 rSummonReady = true;
+            }
+
+            // RH back out gesture
+            if(h.PalmNormal.x > backOutPalmThresh && h.IsRight)
+            {
+                backOutPositionReady = true;
+                if (!backOutListening)
+                {
+                    backOutInitPos = h.PalmPosition;
+                    backOutListening = true;
+                }
+                
             }
         }
     }
@@ -245,6 +270,38 @@ public class LeapListener : MonoBehaviour {
         }
         
     }
+
+    /**--------------------------------------------------------------------------------------
+     * Listens for a selection motion and sets selectiong to true
+     */
+    void ListenForBackOut (Hand rh)
+    {
+
+        backoutGestureDetected = false;
+
+        if (rInView && backOutPositionReady)
+        {
+            backOutListening = true;
+            backOutTravelDistance = rh.PalmPosition.x - backOutInitPos.x;
+        }
+
+        else if (!(rInView && backOutPositionReady))
+        {
+            backOutListening = false;
+            backOutTravelDistance = 0;
+        }
+
+        if (backOutTravelDistance > backOutDistanceThresh)
+        {
+            backoutGestureDetected = true;
+        }
+
+        // Debug.Log(backOutTravelDistance);
+
+
+
+    }
+
 
     Leap.Vector LeapToWorld (Leap.Vector lv)
     {
