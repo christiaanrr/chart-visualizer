@@ -10,3 +10,9 @@ https://github.com/aleareyes/patient-visual
 
 ### Note:
 Code was developed separately and merged via file transfer, and as a result, many changes are not documented as commits
+
+### Collaborators:
+Ryan Tsang
+Christian Rodriguez
+Chiara Mooney
+Analisse Reyes
